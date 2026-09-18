@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "query": "car factory assembly line robotic arms welding automotive",
+  "count": 3,
+  "ranked": false,
+  "captioned_count": 0,
+  "results": [
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/a312fc60a42a.jpg",
+      "caption": "",
+      "source": "YouTube",
+      "original_width": "1280px",
+      "original_height": "720px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/53ed6b5a0d44.png",
+      "caption": "",
+      "source": "KUKA Robotics",
+      "original_width": "1400px",
+      "original_height": "786px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/0bf490a1983c.jpg",
+      "caption": "",
+      "source": "Yaskawa Motoman",
+      "original_width": "1280px",
+      "original_height": "720px"
+    }
+  ]
+}

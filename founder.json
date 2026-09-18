@@ -1,0 +1,23 @@
+{
+  "success": true,
+  "query": "senior businessman executive engineer portrait dramatic dark lighting silhouette",
+  "count": 2,
+  "ranked": false,
+  "captioned_count": 0,
+  "results": [
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/70b13697c9b7.jpg",
+      "caption": "",
+      "source": "The New Yorker",
+      "original_width": "1847px",
+      "original_height": "2560px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/fa42eeb3d935.jpg",
+      "caption": "",
+      "source": "Accords – The Fragrance Foundation",
+      "original_width": "2560px",
+      "original_height": "1707px"
+    }
+  ]
+}
