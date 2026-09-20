@@ -86,7 +86,7 @@
   --mars-red-bright: #FF3344;
   --mars-soft-grey: #F6F8FB;
   --mars-ink: #07111F;
-  --mars-line: rgba(255,255,255,0.10);
+  --mars-line: rgba(255, 255, 255, 0.10);
 
   --radius: 0.5rem;
 
@@ -140,8 +140,8 @@
   --accent: #0A1428;
   --accent-foreground: #FFFFFF;
   --destructive: #E11D2A;
-  --border: rgba(255,255,255,0.10);
-  --input: rgba(255,255,255,0.12);
+  --border: rgba(255, 255, 255, 0.10);
+  --input: rgba(255, 255, 255, 0.12);
   --ring: #3FD0FF;
   --sidebar: #0A1428;
   --sidebar-foreground: #FFFFFF;
@@ -149,7 +149,7 @@
   --sidebar-primary-foreground: #07111F;
   --sidebar-accent: #0A1428;
   --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: rgba(255,255,255,0.10);
+  --sidebar-border: rgba(255, 255, 255, 0.10);
   --sidebar-ring: #3FD0FF;
 }
 
@@ -157,16 +157,20 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   html {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    scroll-behavior: auto; /* Lenis handles smooth scrolling */
+    scroll-behavior: auto;
+    /* Lenis handles smooth scrolling */
   }
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-inter), system-ui, sans-serif;
     overflow-x: hidden;
   }
+
   ::selection {
     background: var(--mars-red);
     color: #fff;
@@ -179,6 +183,7 @@
 .font-display {
   font-family: var(--font-display), system-ui, sans-serif;
 }
+
 .font-mono-tech {
   font-family: var(--font-mono), ui-monospace, monospace;
 }
@@ -208,26 +213,26 @@
 /* Subtle engineering grid background */
 .bg-blueprint-grid {
   background-image:
-    linear-gradient(rgba(63,208,255,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(63,208,255,0.06) 1px, transparent 1px);
+    linear-gradient(rgba(63, 208, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(63, 208, 255, 0.06) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
 .bg-blueprint-grid-fine {
   background-image:
-    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
 .bg-dot-grid {
-  background-image: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
 /* Radial spotlight */
 .bg-spotlight {
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(15,93,255,0.18), transparent 60%);
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(15, 93, 255, 0.18), transparent 60%);
 }
 
 /* Mars red accent line */
@@ -256,14 +261,23 @@
   max-width: 88rem;
   padding-inline: 1.5rem;
 }
+
 @media (min-width: 768px) {
-  .container-mars { padding-inline: 2rem; }
+  .container-mars {
+    padding-inline: 2rem;
+  }
 }
+
 @media (min-width: 1024px) {
-  .container-mars { padding-inline: 2.5rem; }
+  .container-mars {
+    padding-inline: 2.5rem;
+  }
 }
+
 @media (min-width: 1440px) {
-  .container-mars { padding-inline: 3.5rem; }
+  .container-mars {
+    padding-inline: 3.5rem;
+  }
 }
 
 /* Magnetic / link underline reveal */
@@ -271,6 +285,7 @@
   position: relative;
   display: inline-block;
 }
+
 .link-underline::after {
   content: "";
   position: absolute;
@@ -283,24 +298,38 @@
   transform-origin: right;
   transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
 }
+
 .link-underline:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
 
 /* Hide scrollbar for marquee */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar: none; }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar: none;
+}
 
 /* Custom scrollbar */
-.custom-scroll::-webkit-scrollbar { width: 6px; }
-.custom-scroll::-webkit-scrollbar-track { background: transparent; }
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .custom-scroll::-webkit-scrollbar-thumb {
-  background: rgba(15,93,255,0.35);
+  background: rgba(15, 93, 255, 0.35);
   border-radius: 3px;
 }
+
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(15,93,255,0.55);
+  background: rgba(15, 93, 255, 0.55);
 }
 
 /* Vertical text */
@@ -317,6 +346,7 @@
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -329,35 +359,70 @@
 
 /* Marquee keyframes */
 @keyframes marquee-x {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
+
 @keyframes marquee-x-rev {
-  from { transform: translateX(-50%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
+
 .animate-marquee {
   animation: marquee-x 40s linear infinite;
 }
+
 .animate-marquee-rev {
   animation: marquee-x-rev 50s linear infinite;
 }
 
 /* Slow drift */
 @keyframes drift {
-  0%, 100% { transform: translate3d(0,0,0); }
-  50% { transform: translate3d(0,-12px,0); }
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
 }
-.animate-drift { animation: drift 8s ease-in-out infinite; }
+
+.animate-drift {
+  animation: drift 8s ease-in-out infinite;
+}
 
 /* Blinking status dot */
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
 }
-.animate-blink { animation: blink 1.6s ease-in-out infinite; }
+
+.animate-blink {
+  animation: blink 1.6s ease-in-out infinite;
+}
 
 /* Draw path */
 @keyframes dash {
-  to { stroke-dashoffset: 0; }
+  to {
+    stroke-dashoffset: 0;
+  }
 }

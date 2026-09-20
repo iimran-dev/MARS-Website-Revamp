@@ -1,148 +1,108 @@
 'use client'
 
-import { motion, useTransform, type MotionValue } from "framer-motion";
-import { SectionLabel, Reveal, RevealText } from "./primitives";
-import { useScrollProgress } from "./primitives/useScrollProgress";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { IMAGES } from "./images";
 
 const CASE = {
-  industry: "Aerospace · Tier-2 Supplier",
-  certification: "AS9100D Rev C",
-  challenge:
-    "A multi-site aerospace component manufacturer faced repeated non-conformances in traceability and configuration management, threatening its AS9100 certification and a key OEM contract.",
-  solution:
-    "A 14-week program re-architected the QMS: design and production controls were mapped end-to-end, supplier quality governance was installed, and audit-readiness became a daily discipline rather than an annual event.",
-  impact: [
-    { stat: "−68%", label: "Non-conformances within 6 months" },
-    { stat: "100%", label: "Audit findings closed before recertification" },
-    { stat: "2.4×", label: "On-time delivery to OEM" },
+  category: "Documented Case // Aerospace Tier-2",
+  standard: "AS9100D Certification",
+  headline: "From repeated non-conformance to preferred OEM supplier status.",
+  narrative:
+    "Facing critical non-conformances in traceability and configuration management, this multi-site manufacturer was on the verge of losing its AS9100 certification and a flagship OEM supply contract. Over a 14-week engagement, MARS re-engineered the quality architecture — transforming compliance from an annual audit binder into a daily operational discipline.",
+  stats: [
+    { value: "−68%", label: "Non-conformances within 6 months" },
+    { value: "100%", label: "Findings closed before audit" },
+    { value: "2.4×", label: "On-time delivery to OEM" },
   ],
-  result:
-    "Recertified without major findings. Promoted from provisional to preferred supplier status by the OEM within one cycle.",
   quote:
     "They didn't hand us a manual. They rebuilt how we think about quality as an operating system, not a binder.",
+  author: "Director of Quality, Tier-2 Aerospace Manufacturer",
 };
 
 export function SuccessStories() {
-  const [ref, scrollYProgress] = useScrollProgress<HTMLElement>("pass");
-  const yImg: MotionValue<number> = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
 
   return (
-    <section id="stories" className="relative overflow-hidden bg-mars-soft-grey py-24 md:py-36">
+    <section id="stories" ref={ref} className="relative overflow-hidden bg-mars-soft-grey py-24 md:py-32">
       <div className="container-mars relative">
-        {/* Header */}
-        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <Reveal>
-              <SectionLabel light>Real Impact</SectionLabel>
-            </Reveal>
-            <RevealText
-              as="h2"
-              text={"Success\nStories"}
-              className="mt-6 font-display text-[clamp(3rem,9vw,8rem)] font-600 uppercase leading-[0.88] tracking-[-0.04em] text-mars-navy"
-            />
+        {/* Minimalist Section Header */}
+        <div className="flex flex-col gap-4 border-b border-mars-navy/10 pb-8 md:flex-row md:items-end md:justify-between md:pb-12">
+          <div>
+            <span className="font-mono-tech text-xs uppercase tracking-[0.24em] text-mars-red font-semibold">
+              Real Impact // Documented Case
+            </span>
+            <h2 className="mt-3 font-display text-4xl sm:text-5xl md:text-6xl font-600 uppercase tracking-tight text-mars-navy leading-none">
+              Success Stories
+            </h2>
           </div>
-          <div className="lg:col-span-5">
-            <Reveal delay={0.2}>
-              <p className="text-sm leading-relaxed text-mars-navy/65 md:text-base">
-                A documented transformation, not a testimonial. The numbers
-                below are the point of the work — the certificate is the
-                byproduct.
-              </p>
-            </Reveal>
-          </div>
+          <p className="max-w-md text-sm sm:text-base leading-relaxed text-mars-navy/65 font-sans">
+            Documented operational transformation. The metrics below represent the real work — certification is the byproduct.
+          </p>
         </div>
 
-        {/* Editorial feature */}
-        <div className="mt-16 grid gap-10 lg:mt-24 lg:grid-cols-12 lg:gap-12">
-          {/* Image */}
-          <div className="lg:col-span-7">
-            <motion.div
-              style={{ y: yImg }}
-              className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-neutral-900"
-            >
-              <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${IMAGES.inspection})` }} />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
-              {/* Floating tag */}
-              <div className="absolute left-6 top-6 flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 backdrop-blur-md">
-                <span className="h-1.5 w-1.5 rounded-full bg-mars-red" />
-                <span className="font-mono-tech text-[0.55rem] uppercase tracking-[0.2em] text-white/85">
-                  {CASE.industry}
-                </span>
-              </div>
-              {/* Bottom overlay caption */}
-              <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
-                <p className="font-mono-tech text-[0.58rem] uppercase tracking-[0.24em] text-mars-cyan/80">
-                  Certification achieved
-                </p>
-                <p className="mt-1 font-display text-xl font-600 uppercase tracking-tight text-white md:text-2xl">
-                  {CASE.certification}
-                </p>
-              </div>
-            </motion.div>
-          </div>
+        {/* Minimalist Editorial Split */}
+        <div className="mt-12 grid grid-cols-1 items-center gap-10 lg:mt-16 lg:grid-cols-12 lg:gap-14">
+          {/* Left Column: Image (Newspapers on wooden table) */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-6"
+          >
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-black/5 bg-neutral-200 shadow-[0_16px_40px_rgba(0,0,0,0.06)]">
+              <img
+                src={IMAGES.newspaper}
+                alt="Documented case record"
+                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+          </motion.div>
 
-          {/* Content */}
-          <div className="lg:col-span-5">
-            <Reveal>
-              <span className="font-mono-tech text-[0.58rem] uppercase tracking-[0.26em] text-mars-navy/40">
-                / Case Study 01
-              </span>
-            </Reveal>
+          {/* Right Column: Case Story & Measured Impact */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-6 flex flex-col justify-center"
+          >
 
-            <Reveal delay={0.1}>
-              <h3 className="mt-4 font-display text-2xl font-600 uppercase leading-tight tracking-tight text-mars-navy md:text-3xl">
-                From non-conformance to preferred supplier
-              </h3>
-            </Reveal>
+            {/* Headline */}
+            <h3 className="mt-4 font-display text-2xl sm:text-3xl lg:text-[2.2rem] font-600 uppercase tracking-tight text-mars-navy leading-tight">
+              {CASE.headline}
+            </h3>
 
-            <div className="mt-8 space-y-8">
-              {[
-                { label: "Challenge", text: CASE.challenge },
-                { label: "Solution", text: CASE.solution },
-                { label: "Business Result", text: CASE.result },
-              ].map((b, i) => (
-                <Reveal key={b.label} delay={0.15 + i * 0.1}>
-                  <div className="border-l-2 border-mars-navy/15 pl-5">
-                    <p className="font-mono-tech text-[0.55rem] uppercase tracking-[0.24em] text-mars-red">
-                      {b.label}
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-mars-navy/70 md:text-[0.95rem]">
-                      {b.text}
-                    </p>
+            {/* Narrative */}
+            <p className="mt-4 text-sm sm:text-base leading-relaxed text-mars-navy/70 font-sans">
+              {CASE.narrative}
+            </p>
+
+            {/* Minimal Metrics Row */}
+            <div className="mt-8 grid grid-cols-3 gap-4 border-y border-mars-navy/10 py-6">
+              {CASE.stats.map((s) => (
+                <div key={s.label}>
+                  <div className="font-display text-2xl sm:text-3xl font-600 text-mars-red tracking-tight">
+                    {s.value}
                   </div>
-                </Reveal>
+                  <div className="mt-1 text-xs leading-snug text-mars-navy/60 font-sans">
+                    {s.label}
+                  </div>
+                </div>
               ))}
             </div>
 
-            {/* Impact metrics */}
-            <Reveal delay={0.4}>
-              <div className="mt-10 grid grid-cols-3 gap-4 border-t border-mars-navy/10 pt-6">
-                {CASE.impact.map((m) => (
-                  <div key={m.label}>
-                    <div className="font-display text-2xl font-600 text-mars-red md:text-3xl">
-                      {m.stat}
-                    </div>
-                    <div className="mt-1 text-[0.7rem] leading-tight text-mars-navy/55">
-                      {m.label}
-                    </div>
-                  </div>
-                ))}
+            {/* Minimal Pullquote */}
+            <div className="mt-6 border-l-2 border-mars-red pl-4">
+              <p className="font-sans text-sm sm:text-base italic text-mars-navy/85 leading-relaxed">
+                &ldquo;{CASE.quote}&rdquo;
+              </p>
+              <div className="mt-2 font-mono-tech text-[0.68rem] uppercase tracking-wider text-mars-navy/50">
+                — {CASE.author}
               </div>
-            </Reveal>
-
-            {/* Client quote */}
-            <Reveal delay={0.5}>
-              <blockquote className="mt-10 border-l-2 border-mars-red pl-5">
-                <p className="font-display text-lg font-500 leading-snug text-mars-navy md:text-xl">
-                  &ldquo;{CASE.quote}&rdquo;
-                </p>
-                <footer className="mt-3 font-mono-tech text-[0.55rem] uppercase tracking-[0.24em] text-mars-navy/45">
-                  — Quality Director, Aerospace Tier-2
-                </footer>
-              </blockquote>
-            </Reveal>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

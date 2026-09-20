@@ -11,5 +11,7 @@ export const IMAGES = {
   engineering: "https://images.unsplash.com/photo-1580983230712-f7d0f878bcc4?auto=format&fit=crop&w=1600&q=80",
   electronics: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&w=1600&q=80",
   sunrise: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/a2bcf83e8c79.jpg",
-  inspection: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/42b39f5b685e.jpg",
+  inspection: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=1600&q=80",
+  newspaper: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=1600&q=80",
+  knowledge: "https://images.unsplash.com/photo-1709880945165-d2208c6ad2ec?auto=format&fit=crop&w=1600&q=80",
 } as const;

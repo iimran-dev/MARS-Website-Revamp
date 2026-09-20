@@ -25,16 +25,10 @@ export default function Home() {
       <Industries />
       <ExpertiseConstellation />
       <FounderImpact />
-    
       <TransformationEngine />
-      <ProcessBlueprint />
       <SuccessStories />
       <TrustedLeaders />
-      <TrainingExcellence />
       <KnowledgeCenter />
-      <GlobalStandardsWall />
-      <DigitalQualityFuture />
-      <LeadershipPerspective />
       <FinalCTA />
       <Footer />
     </main>

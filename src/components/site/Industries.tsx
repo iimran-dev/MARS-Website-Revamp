@@ -129,10 +129,6 @@ export function Industries() {
                       transition={{ duration: 0.4, delay: 0.2 }}
                       className="absolute inset-0 flex flex-col justify-end p-8"
                     >
-                      <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 font-mono-tech text-[0.55rem] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
-                        <Crosshair className="text-mars-cyan" />
-                        {ind.tag}
-                      </span>
                       <h3 className="mt-4 font-display text-4xl font-600 uppercase tracking-tight text-white md:text-5xl">
                         {ind.name}
                       </h3>
@@ -166,9 +162,6 @@ export function Industries() {
             <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${ind.img})` }} />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
             <div className="absolute inset-0 flex flex-col justify-end p-6">
-              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 font-mono-tech text-[0.5rem] uppercase tracking-[0.2em] text-white/80">
-                {ind.tag}
-              </span>
               <h3 className="mt-3 font-display text-3xl font-600 uppercase tracking-tight text-white">
                 {ind.name}
               </h3>
