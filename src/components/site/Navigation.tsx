@@ -6,12 +6,12 @@ import { cn } from "@/lib/utils";
 import { MarsSigmaMark } from "./Logo";
 
 const NAV_LINKS = [
-  { label: "About", href: "#founder" },
-  { label: "Services", href: "#constellation" },
   { label: "Industries", href: "#industries" },
-  { label: "Training", href: "#training" },
-  { label: "Resources", href: "#knowledge" },
-  { label: "Careers", href: "#cta" },
+  { label: "Standards", href: "#constellation" },
+  { label: "About", href: "#founder" },
+  { label: "Approach", href: "#engine" },
+  { label: "Impact", href: "#stories" },
+  { label: "Knowledge", href: "#knowledge" },
   { label: "Contact", href: "#footer" },
 ];
 
@@ -21,7 +21,12 @@ export function Navigation() {
   const [active, setActive] = useState<string>("");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      if (window.scrollY < 200) {
+        setActive("");
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -77,13 +82,13 @@ export function Navigation() {
           </a>
 
           {/* Desktop nav */}
-          <ul className="hidden lg:flex items-center gap-1">
+          <ul className="hidden lg:flex items-center gap-0.5 xl:gap-1">
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
                 <a
                   href={link.href}
                   className={cn(
-                    "link-underline relative px-3.5 py-2 text-[0.8rem] font-medium uppercase tracking-[0.14em] transition-colors duration-300",
+                    "link-underline relative px-2.5 py-2 text-[0.76rem] font-medium uppercase tracking-[0.1em] transition-colors duration-300 xl:px-3.5 xl:text-[0.8rem] xl:tracking-[0.14em]",
                     active === link.href ? "text-white" : "text-white/55 hover:text-white"
                   )}
                 >
@@ -91,7 +96,7 @@ export function Navigation() {
                   {active === link.href && (
                     <motion.span
                       layoutId="nav-active"
-                      className="absolute -bottom-0.5 left-3.5 h-px w-4 bg-mars-red"
+                      className="absolute -bottom-0.5 left-2.5 xl:left-3.5 h-px w-4 bg-mars-red"
                     />
                   )}
                 </a>

@@ -72,6 +72,14 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
+  icons: {
+    icon: [
+      { url: "/mars/icon.svg", type: "image/svg+xml" },
+      { url: "/mars/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/mars/favicon.ico",
+    apple: "/mars/apple-touch-icon.png",
+  },
 };
 
 const orgSchema = {
@@ -115,6 +123,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/mars/icon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/mars/favicon.ico" />
+        <link rel="apple-touch-icon" href="/mars/apple-touch-icon.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
