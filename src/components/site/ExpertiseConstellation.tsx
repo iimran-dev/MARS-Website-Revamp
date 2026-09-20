@@ -1,226 +1,225 @@
 'use client'
 
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { SectionLabel, RevealText, Reveal } from "./primitives";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { MarsSigmaMark } from "./Logo";
 
 type Node = {
   id: string;
   code: string;
+  index: string;
   name: string;
   desc: string;
+  points: string[];
 };
 
 const NODES: Node[] = [
-  { id: "iso9001", code: "ISO 9001", name: "Quality Management", desc: "Foundational QMS for any organization seeking consistency, control, and continual improvement." },
-  { id: "as9100", code: "AS9100", name: "Aerospace Series", desc: "Aerospace quality management for design, manufacture, and service of aviation and space products." },
-  { id: "iso27001", code: "ISO 27001", name: "Information Security", desc: "Information security management systems protecting confidentiality, integrity, and availability." },
-  { id: "iatf16949", code: "IATF 16949", name: "Automotive QMS", desc: "Automotive industry quality management for the global supply chain." },
-  { id: "iso14001", code: "ISO 14001", name: "Environmental", desc: "Environmental management systems reducing footprint and ensuring compliance." },
-  { id: "iso45001", code: "ISO 45001", name: "Occupational H&S", desc: "Occupational health and safety management for safer, more resilient operations." },
-  { id: "lean", code: "Lean Six Sigma", name: "Operational Performance", desc: "Process improvement methodology combining lean elimination of waste with statistical quality control." },
-  { id: "supplier", code: "Supplier Development", name: "Supply Chain Quality", desc: "Structured supplier assessment, development, and performance governance." },
-  { id: "tpi", code: "Third-Party Inspection", name: "Independent Verification", desc: "Independent inspection of materials, processes, and finished products." },
+  {
+    id: "iso9001",
+    code: "ISO 9001",
+    index: "01",
+    name: "Quality Management Systems",
+    desc: "The universal baseline for process control, organizational consistency, and continual operational performance across all enterprise operations.",
+    points: ["Process Standardization", "Defect Prevention", "Management Review"]
+  },
+  {
+    id: "as9100",
+    code: "AS9100D",
+    index: "02",
+    name: "Aerospace Series Standards",
+    desc: "Rigorous quality management demanded across aviation, space, and defense supply chains with total material traceability and risk control.",
+    points: ["Full Material Traceability", "Risk Assessment", "Critical Component Verification"]
+  },
+  {
+    id: "iso27001",
+    code: "ISO 27001",
+    index: "03",
+    name: "Information Security",
+    desc: "Comprehensive information security frameworks guarding corporate intellectual property, client data integrity, and operational infrastructure.",
+    points: ["Enterprise Data Security", "Risk Mitigation", "Regulatory Governance"]
+  },
+  {
+    id: "iatf16949",
+    code: "IATF 16949",
+    index: "04",
+    name: "Automotive Quality Standard",
+    desc: "Stringent automotive sector quality systems designed for variation reduction, PPAP qualification, and continuous supply chain capability.",
+    points: ["APQP / PPAP Rigor", "Variation Reduction", "Tier-1 Supply Chain Alignment"]
+  },
+  {
+    id: "iso14001",
+    code: "ISO 14001",
+    index: "05",
+    name: "Environmental Management",
+    desc: "Proactive environmental governance systems reducing corporate environmental footprint, conserving energy, and assuring compliance.",
+    points: ["Environmental Compliance", "Energy Efficiency", "Waste Reduction"]
+  },
+  {
+    id: "iso45001",
+    code: "ISO 45001",
+    index: "06",
+    name: "Occupational Health & Safety",
+    desc: "Systematic hazard identification and safety controls ensuring resilient, hazard-free operations and global regulatory compliance.",
+    points: ["Hazard Elimination", "Workplace Safety Culture", "Accident Prevention"]
+  },
+  {
+    id: "lean",
+    code: "Lean 6σ",
+    index: "07",
+    name: "Operational Excellence",
+    desc: "Data-driven process improvement merging lean waste elimination with statistical process control to maximize yields and throughput.",
+    points: ["DMAIC Methodology", "Yield & OEE Uplift", "Statistical Process Control"]
+  },
+  {
+    id: "supplier",
+    code: "Supplier QA",
+    index: "08",
+    name: "Supply Chain Development",
+    desc: "Structured supplier qualification, rigorous supplier audits, and vendor quality governance ensuring consistent incoming component fidelity.",
+    points: ["Vendor Quality Audits", "Supplier Scorecards", "Incoming Part Reliability"]
+  },
+  {
+    id: "tpi",
+    code: "TPI",
+    index: "09",
+    name: "Independent Inspection",
+    desc: "Accredited third-party inspection of raw materials, critical manufacturing processes, and finished goods prior to global deployment.",
+    points: ["Objective Verification", "Stage-Gate Inspection", "Independent Certification"]
+  },
 ];
 
 export function ExpertiseConstellation() {
-  const [active, setActive] = useState<string | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
-  const activeNode = NODES.find((n) => n.id === active);
+  const [activeId, setActiveId] = useState<string>("iso9001");
+  const activeIndex = NODES.findIndex((n) => n.id === activeId);
+  const activeNode = NODES[activeIndex >= 0 ? activeIndex : 0];
 
-  // Geometric arrangement — 9 nodes evenly spaced on a circle
-  const R = 36; // radius percentage from center
+  // Simple, ordinary circle radius percentage
+  const R = 38;
   const positions = NODES.map((_, i) => {
     const angle = (i / NODES.length) * Math.PI * 2 - Math.PI / 2;
-    return { x: 50 + Math.cos(angle) * R, y: 50 + Math.sin(angle) * R * 0.62 };
+    return {
+      x: 50 + Math.cos(angle) * R,
+      y: 50 + Math.sin(angle) * R,
+    };
   });
 
-  return (
-    <section id="constellation" className="relative overflow-hidden bg-mars-navy-night py-24 md:py-36">
-      {/* Background grid */}
-      <div className="absolute inset-0 bg-blueprint-grid opacity-40" aria-hidden />
-      <div className="absolute inset-0 bg-spotlight" aria-hidden />
+  const activePos = positions[activeIndex >= 0 ? activeIndex : 0];
 
-      <div ref={ref} className="container-mars relative">
-        {/* Header */}
-        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <Reveal>
-              <SectionLabel>The Mars Sigma Approach</SectionLabel>
-            </Reveal>
-            <RevealText
-              as="h2"
-              text={"From Compliance\nto Competitive\nAdvantage"}
-              className="mt-6 font-display text-[clamp(2.2rem,5.5vw,5rem)] font-600 uppercase leading-[0.92] tracking-[-0.03em] text-white"
-            />
+  return (
+    <section
+      id="constellation"
+      className="relative bg-mars-navy-night py-16 md:py-24 text-white"
+    >
+      <div className="container-mars">
+        {/* Header — modern, crisp and simple */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/10">
+          <div>
+            <span className="font-mono-tech text-xs uppercase tracking-[0.25em] text-mars-cyan">
+              Frameworks & Accreditations
+            </span>
+            <h2 className="mt-2 font-display text-3xl font-600 uppercase tracking-tight text-white md:text-4xl">
+              Standards & Certifications
+            </h2>
           </div>
-          <div className="lg:col-span-5">
-            <Reveal delay={0.2}>
-              <p className="text-sm leading-relaxed text-white/55 md:text-base">
-                A single source of expertise across the standards that govern
-                global industry. Each node connects to a central operational
-                philosophy — systems that perform beyond the audit.
-              </p>
-            </Reveal>
-          </div>
+          <p className="max-w-md text-sm text-white/60 md:text-base leading-relaxed">
+            Nine interconnected disciplines operating as one unified management system that outperforms standard audits.
+          </p>
         </div>
 
-        {/* Constellation */}
-        <div className="relative mt-16 grid gap-10 lg:mt-24 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-8">
-            <div className="relative mx-auto aspect-square w-full max-w-2xl">
-              <svg
-                viewBox="0 0 100 100"
-                className="absolute inset-0 h-full w-full overflow-visible"
-                aria-hidden
-              >
-                {/* Outer orbital ring */}
-                <motion.ellipse
+        {/* Modern Interactive Circle + Editorial Display */}
+        <div className="mt-12 grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+          {/* Left: Modern Minimal Circle Display */}
+          <div className="lg:col-span-6 flex justify-center">
+            <div className="relative aspect-square w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px]">
+              {/* Circular track and active connection ray */}
+              <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full pointer-events-none" aria-hidden>
+                {/* Clean circular track */}
+                <circle
                   cx="50"
                   cy="50"
-                  rx="40"
-                  ry="24.8"
+                  r={R}
                   fill="none"
-                  stroke="rgba(63,208,255,0.18)"
-                  strokeWidth="0.2"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={inView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                  transition={{ duration: 2.4, ease: [0.22, 1, 0.36, 1] }}
+                  stroke="rgba(255,255,255,0.12)"
+                  strokeWidth="0.75"
                 />
-                {/* Inner ring */}
-                <motion.ellipse
-                  cx="50"
-                  cy="50"
-                  rx="22"
-                  ry="13.6"
-                  fill="none"
-                  stroke="rgba(63,208,255,0.12)"
-                  strokeWidth="0.15"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={inView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                  transition={{ duration: 2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                {/* Active ray connecting center to selected node */}
+                <motion.line
+                  x1="50"
+                  y1="50"
+                  x2={activePos.x}
+                  y2={activePos.y}
+                  stroke="#E11D2A"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  initial={false}
+                  animate={{ x2: activePos.x, y2: activePos.y }}
+                  transition={{ type: "spring", stiffness: 300, damping: 28 }}
                 />
-
-                {/* Connection lines from center to each node */}
-                {positions.map((p, i) => {
-                  const isActive = active === NODES[i].id;
-                  return (
-                    <motion.line
-                      key={NODES[i].id}
-                      x1="50"
-                      y1="50"
-                      x2={p.x}
-                      y2={p.y}
-                      stroke={isActive ? "#E11D2A" : "rgba(255,255,255,0.18)"}
-                      strokeWidth={isActive ? 0.5 : 0.25}
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={inView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                      transition={{ duration: 1, delay: 0.5 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                  );
-                })}
               </svg>
 
-              {/* Center core */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
-                transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
-              >
-                <div className="relative grid h-24 w-24 place-items-center rounded-full border border-white/15 bg-mars-navy-night/80 backdrop-blur-md md:h-28 md:w-28">
-                  <div className="absolute inset-0 rounded-full bg-mars-red/10 blur-xl" />
-                  <MarsSigmaMark size={44} className="relative text-white" />
-                  <div className="absolute -inset-3 rounded-full border border-mars-red/30" />
-                </div>
-              </motion.div>
+              {/* Center glass disc */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-16 w-16 md:h-18 md:w-18 items-center justify-center rounded-full border border-white/15 bg-mars-navy-deep/95 shadow-xl backdrop-blur-md">
+                <MarsSigmaMark size={28} className="text-white" />
+              </div>
 
-              {/* Orbital nodes */}
+              {/* Minimal modern circular nodes */}
               {positions.map((p, i) => {
                 const node = NODES[i];
-                const isActive = active === node.id;
+                const isActive = activeId === node.id;
                 return (
-                  <motion.button
+                  <button
                     key={node.id}
                     type="button"
-                    onMouseEnter={() => setActive(node.id)}
-                    onMouseLeave={() => setActive(null)}
-                    onFocus={() => setActive(node.id)}
-                    onBlur={() => setActive(null)}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 0.6, delay: 0.7 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                    className="group absolute z-20 -translate-x-1/2 -translate-y-1/2"
+                    onClick={() => setActiveId(node.id)}
+                    onMouseEnter={() => setActiveId(node.id)}
+                    className="absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none"
                     style={{ left: `${p.x}%`, top: `${p.y}%` }}
+                    aria-label={node.code}
                   >
                     <div
-                      className={`relative flex h-16 w-16 flex-col items-center justify-center rounded-full border bg-mars-navy-deep/80 text-center backdrop-blur-sm transition-all duration-300 md:h-20 md:w-20 ${
+                      className={`flex h-12 w-12 sm:h-13 sm:w-13 md:h-14 md:w-14 items-center justify-center rounded-full border text-center transition-all duration-300 ${
                         isActive
-                          ? "border-mars-red scale-110 shadow-[0_0_30px_rgba(225,29,42,0.4)]"
-                          : "border-white/15 hover:border-white/40"
+                          ? "border-mars-red bg-mars-red text-white scale-110 shadow-[0_0_24px_rgba(225,29,42,0.45)]"
+                          : "border-white/15 bg-mars-navy-deep/90 text-white/70 hover:border-white/40 hover:text-white hover:scale-105 backdrop-blur-sm"
                       }`}
                     >
-                      <span
-                        className={`font-display text-[0.62rem] font-600 uppercase leading-tight tracking-tight md:text-[0.72rem] ${
-                          isActive ? "text-white" : "text-white/80"
-                        }`}
-                      >
+                      <span className="px-1 text-[0.62rem] sm:text-[0.68rem] md:text-[0.72rem] font-semibold tracking-tight leading-tight">
                         {node.code}
                       </span>
                     </div>
-                  </motion.button>
+                  </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Side info panel */}
-          <div className="lg:col-span-4 lg:border-l lg:border-white/8 lg:pl-12">
-            <motion.div
-              key={active ?? "default"}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="sticky top-28"
-            >
-              {activeNode ? (
-                <>
-                  <span className="font-mono-tech text-[0.6rem] uppercase tracking-[0.28em] text-mars-red">
-                    / Selected node
+          {/* Right: Modern Editorial Details */}
+          <div className="lg:col-span-6">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeNode.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                className="max-w-xl"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="h-px w-6 bg-mars-red" />
+                  <span className="font-mono-tech text-xs uppercase tracking-[0.25em] text-mars-cyan">
+                    Standard {activeNode.index}
                   </span>
-                  <h3 className="mt-4 font-display text-2xl font-600 uppercase tracking-tight text-white md:text-3xl">
-                    {activeNode.code}
-                  </h3>
-                  <p className="mt-2 text-sm uppercase tracking-[0.12em] text-white/45">
-                    {activeNode.name}
-                  </p>
-                  <p className="mt-6 text-sm leading-relaxed text-white/65 md:text-base">
-                    {activeNode.desc}
-                  </p>
-                </>
-              ) : (
-                <>
-                  <span className="font-mono-tech text-[0.6rem] uppercase tracking-[0.28em] text-white/40">
-                    / Hover a node
-                  </span>
-                  <h3 className="mt-4 font-display text-2xl font-600 uppercase tracking-tight text-white md:text-3xl">
-                    A Global Quality Ecosystem
-                  </h3>
-                  <p className="mt-6 text-sm leading-relaxed text-white/55 md:text-base">
-                    Nine integrated disciplines orbit a single operational
-                    philosophy. Move your pointer across any node to inspect the
-                    standard and how it compounds with the rest of the network.
-                  </p>
-                </>
-              )}
-              <div className="mt-10 border-t border-white/8 pt-6">
-                <p className="font-mono-tech text-[0.58rem] uppercase tracking-[0.26em] text-white/35">
-                  9 systems · 1 philosophy
+                </div>
+
+                <h3 className="mt-3 font-display text-3xl sm:text-4xl font-600 uppercase tracking-tight text-white leading-tight">
+                  {activeNode.name}
+                </h3>
+
+                <p className="mt-4 text-base leading-relaxed text-white/70">
+                  {activeNode.desc}
                 </p>
-              </div>
-            </motion.div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>

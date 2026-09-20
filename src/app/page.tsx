@@ -21,12 +21,12 @@ export default function Home() {
     <main className="relative min-h-screen bg-mars-navy-night">
       <Navigation />
       <Hero />
-      <Industries />
       <AuthorityRibbon />
-      <FounderImpact />
+      <Industries />
       <ExpertiseConstellation />
+      <FounderImpact />
+    
       <TransformationEngine />
-      
       <ProcessBlueprint />
       <SuccessStories />
       <TrustedLeaders />

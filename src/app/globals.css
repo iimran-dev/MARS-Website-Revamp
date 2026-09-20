@@ -24,6 +24,16 @@
   --color-ink: var(--mars-ink);
   --color-line: var(--mars-line);
 
+  /* Mars-prefixed tokens matching class names used across site components */
+  --color-mars-navy: var(--mars-navy);
+  --color-mars-navy-deep: var(--mars-navy-deep);
+  --color-mars-navy-night: var(--mars-navy-night);
+  --color-mars-royal: var(--mars-royal);
+  --color-mars-cyan: var(--mars-cyan);
+  --color-mars-soft-grey: var(--mars-soft-grey);
+  --color-mars-ink: var(--mars-ink);
+  --color-mars-line: var(--mars-line);
+
   /* Fonts */
   --font-sans: var(--font-inter);
   --font-display: var(--font-display);

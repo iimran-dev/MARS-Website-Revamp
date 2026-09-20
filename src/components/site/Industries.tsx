@@ -96,7 +96,7 @@ export function Industries() {
                 onClick={() => setActive(i)}
                 animate={{ flex: isActive ? 4 : 1 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="group relative h-full min-w-0 cursor-pointer overflow-hidden rounded-[2rem] bg-mars-navy"
+                className="group relative h-full min-w-0 cursor-pointer overflow-hidden rounded-[2rem] bg-neutral-900"
               >
                 {/* Image */}
                 <motion.div
@@ -105,8 +105,8 @@ export function Industries() {
                   animate={{ scale: isActive ? 1.05 : 1.12 }}
                   transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-mars-navy-night via-mars-navy-night/40 to-transparent" />
-                <div className="absolute inset-0 bg-mars-navy-night/20 transition-opacity duration-500 group-hover:bg-mars-navy-night/10" />
+                {/* Neutral bottom gradient for typography readability without blue wash */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
                 {/* Vertical name (collapsed) */}
                 <div className="absolute left-0 top-0 h-full w-full">
@@ -161,10 +161,10 @@ export function Industries() {
             initial={{ opacity: 0, y: 24 }}
             animate={mInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.6, delay: i * 0.05 }}
-            className="relative h-64 overflow-hidden rounded-2xl bg-mars-navy"
+            className="relative h-64 overflow-hidden rounded-2xl bg-neutral-900"
           >
             <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${ind.img})` }} />
-            <div className="absolute inset-0 bg-gradient-to-t from-mars-navy-night via-mars-navy-night/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
             <div className="absolute inset-0 flex flex-col justify-end p-6">
               <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 font-mono-tech text-[0.5rem] uppercase tracking-[0.2em] text-white/80">
                 {ind.tag}

@@ -59,10 +59,10 @@ export function SuccessStories() {
           <div className="lg:col-span-7">
             <motion.div
               style={{ y: yImg }}
-              className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-mars-navy"
+              className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-neutral-900"
             >
               <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${IMAGES.inspection})` }} />
-              <div className="absolute inset-0 bg-gradient-to-t from-mars-navy-night/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
               {/* Floating tag */}
               <div className="absolute left-6 top-6 flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 backdrop-blur-md">
                 <span className="h-1.5 w-1.5 rounded-full bg-mars-red" />

@@ -50,7 +50,7 @@ export function Reveal({
   as?: ElementType;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once, margin: "-8% 0px -8% 0px" });
+  const inView = useInView(ref, { once, margin: "0px 0px -40px 0px" });
   const MotionTag = (motion as Record<string, any>)[
     typeof as === "string" ? as : "div"
   ] as React.ComponentType<any>;
@@ -133,7 +133,7 @@ export function CountUp({
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-15% 0px" });
+  const inView = useInView(ref, { once: true, margin: "0px 0px -20px 0px" });
   const [value, setValue] = useState(0);
 
   useEffect(() => {

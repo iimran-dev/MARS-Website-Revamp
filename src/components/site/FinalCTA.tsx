@@ -19,8 +19,8 @@ export function FinalCTA() {
       {/* Background image */}
       <motion.div style={{ y: yBg, scale: scaleBg }} className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${IMAGES.sunrise})` }} />
-        <motion.div style={{ opacity: overlayOpacity }} className="absolute inset-0 bg-gradient-to-b from-mars-navy-night/80 via-mars-navy-night/55 to-mars-navy-night/90" />
-        <div className="absolute inset-0 bg-gradient-to-r from-mars-navy-night/70 via-transparent to-mars-navy-night/70" />
+        <motion.div style={{ opacity: overlayOpacity }} className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-black/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" />
       </motion.div>
 
       {/* Technical overlay lines */}
