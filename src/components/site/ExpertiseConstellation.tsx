@@ -1,226 +1,262 @@
 'use client'
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MarsSigmaMark } from "./Logo";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { SectionWave } from "./SectionWave";
 
-type Node = {
+interface CertificationItem {
   id: string;
-  code: string;
   index: string;
-  name: string;
-  desc: string;
-  points: string[];
-};
+  code: string;
+  description: string;
+  category: string;
+  details: string;
+  industries: string;
+}
 
-const NODES: Node[] = [
+const CERTIFICATIONS: CertificationItem[] = [
   {
-    id: "iso9001",
-    code: "ISO 9001",
+    id: "as9100d",
     index: "01",
-    name: "Quality Management Systems",
-    desc: "The universal baseline for process control, organizational consistency, and continual operational performance across all enterprise operations.",
-    points: ["Process Standardization", "Defect Prevention", "Management Review"]
-  },
-  {
-    id: "as9100",
     code: "AS9100D",
-    index: "02",
-    name: "Aerospace Series Standards",
-    desc: "Rigorous quality management demanded across aviation, space, and defense supply chains with total material traceability and risk control.",
-    points: ["Full Material Traceability", "Risk Assessment", "Critical Component Verification"]
-  },
-  {
-    id: "iso27001",
-    code: "ISO 27001",
-    index: "03",
-    name: "Information Security",
-    desc: "Comprehensive information security frameworks guarding corporate intellectual property, client data integrity, and operational infrastructure.",
-    points: ["Enterprise Data Security", "Risk Mitigation", "Regulatory Governance"]
+    description: "Aerospace Series Standards",
+    category: "Aviation & Aerospace",
+    details:
+      "Mandatory quality management system for aviation, space, and defense organizations. Enforces complete material traceability, risk management, counterfeit part mitigation, and total Nadcap audit readiness.",
+    industries: "Aviation, Space & Defense, Tier-1 & Tier-2 Primes, Precision Machining",
   },
   {
     id: "iatf16949",
+    index: "02",
     code: "IATF 16949",
+    description: "Automotive Quality Standard",
+    category: "Automotive",
+    details:
+      "Stringent global automotive quality standard focused on defect prevention, supply chain variation reduction, APQP/PPAP qualification, and continuous capability (Cpk ≥ 1.67).",
+    industries: "Passenger Vehicles, Commercial Mobility, Tier-1 & Tier-2 OEM Suppliers",
+  },
+  {
+    id: "iso9001",
+    index: "03",
+    code: "ISO 9001",
+    description: "Quality Management Systems",
+    category: "Universal Operations",
+    details:
+      "The international baseline for process governance, organizational consistency, and systematic quality assurance across all engineering and corporate operations.",
+    industries: "Cross-Industry Manufacturing, Engineering, Electronics, Enterprise Tech",
+  },
+  {
+    id: "iso27001",
     index: "04",
-    name: "Automotive Quality Standard",
-    desc: "Stringent automotive sector quality systems designed for variation reduction, PPAP qualification, and continuous supply chain capability.",
-    points: ["APQP / PPAP Rigor", "Variation Reduction", "Tier-1 Supply Chain Alignment"]
-  },
-  {
-    id: "iso14001",
-    code: "ISO 14001",
-    index: "05",
-    name: "Environmental Management",
-    desc: "Proactive environmental governance systems reducing corporate environmental footprint, conserving energy, and assuring compliance.",
-    points: ["Environmental Compliance", "Energy Efficiency", "Waste Reduction"]
-  },
-  {
-    id: "iso45001",
-    code: "ISO 45001",
-    index: "06",
-    name: "Occupational Health & Safety",
-    desc: "Systematic hazard identification and safety controls ensuring resilient, hazard-free operations and global regulatory compliance.",
-    points: ["Hazard Elimination", "Workplace Safety Culture", "Accident Prevention"]
-  },
-  {
-    id: "lean",
-    code: "Lean 6σ",
-    index: "07",
-    name: "Operational Excellence",
-    desc: "Data-driven process improvement merging lean waste elimination with statistical process control to maximize yields and throughput.",
-    points: ["DMAIC Methodology", "Yield & OEE Uplift", "Statistical Process Control"]
-  },
-  {
-    id: "supplier",
-    code: "Supplier QA",
-    index: "08",
-    name: "Supply Chain Development",
-    desc: "Structured supplier qualification, rigorous supplier audits, and vendor quality governance ensuring consistent incoming component fidelity.",
-    points: ["Vendor Quality Audits", "Supplier Scorecards", "Incoming Part Reliability"]
-  },
-  {
-    id: "tpi",
-    code: "TPI",
-    index: "09",
-    name: "Independent Inspection",
-    desc: "Accredited third-party inspection of raw materials, critical manufacturing processes, and finished goods prior to global deployment.",
-    points: ["Objective Verification", "Stage-Gate Inspection", "Independent Certification"]
+    code: "ISO 27001",
+    description: "Information Security Management",
+    category: "Cyber & Intelligence",
+    details:
+      "Comprehensive information security framework establishing robust risk governance, safeguarding corporate intellectual property, proprietary CAD assets, and operational IT infrastructure.",
+    industries: "Defense Tech, Enterprise SaaS, High-Value IP Manufacturing, Aerospace R&D",
   },
 ];
 
 export function ExpertiseConstellation() {
-  const [activeId, setActiveId] = useState<string>("iso9001");
-  const activeIndex = NODES.findIndex((n) => n.id === activeId);
-  const activeNode = NODES[activeIndex >= 0 ? activeIndex : 0];
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
 
-  // Simple, ordinary circle radius percentage
-  const R = 38;
-  const positions = NODES.map((_, i) => {
-    const angle = (i / NODES.length) * Math.PI * 2 - Math.PI / 2;
-    return {
-      x: 50 + Math.cos(angle) * R,
-      y: 50 + Math.sin(angle) * R,
-    };
-  });
-
-  const activePos = positions[activeIndex >= 0 ? activeIndex : 0];
+  const toggleRow = (id: string) => {
+    setExpandedId((prev) => (prev === id ? null : id));
+  };
 
   return (
     <section
       id="constellation"
-      className="relative bg-mars-navy-night py-16 md:py-24 text-white"
+      ref={ref}
+      className="relative overflow-hidden bg-[#06111F] py-20 sm:py-24 md:py-32 text-[#F5F7FA]"
     >
-      <div className="container-mars">
-        {/* Header — modern, crisp and simple */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/10">
-          <div>
-            <span className="font-mono-tech text-xs uppercase tracking-[0.25em] text-mars-cyan">
-              Frameworks & Accreditations
+      {/* Top transition wave from Industries */}
+      <SectionWave color="text-mars-soft-grey" />
+
+      <div className="container-mars relative z-10">
+        {/* Section Header */}
+        <div className="mb-14 sm:mb-18 md:mb-24 flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-white/10 pb-8 md:pb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-2xl"
+          >
+            <span className="font-mono text-xs uppercase tracking-[0.26em] text-[#8D98A8] block mb-4 font-medium">
+              CERTIFICATIONS & STANDARDS
             </span>
-            <h2 className="mt-2 font-display text-3xl font-600 uppercase tracking-tight text-white md:text-4xl">
-              Standards & Certifications
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-600 text-[#F5F7FA] tracking-tight leading-[1.04]">
+              Standards that define
+              <br className="hidden sm:inline" /> operational excellence.
             </h2>
-          </div>
-          <p className="max-w-md text-sm text-white/60 md:text-base leading-relaxed">
-            Nine interconnected disciplines operating as one unified management system that outperforms standard audits.
-          </p>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-md text-sm sm:text-base leading-relaxed text-[#8D98A8] font-sans"
+          >
+            We guide enterprise organizations across aerospace, automotive, quality management,
+            information security, medical devices, environmental governance, and occupational health
+            & safety to certified audit readiness and sustained competitive advantage.
+          </motion.p>
         </div>
 
-        {/* Modern Interactive Circle + Editorial Display */}
-        <div className="mt-12 grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
-          {/* Left: Modern Minimal Circle Display */}
-          <div className="lg:col-span-6 flex justify-center">
-            <div className="relative aspect-square w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px]">
-              {/* Circular track and active connection ray */}
-              <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full pointer-events-none" aria-hidden>
-                {/* Clean circular track */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r={R}
-                  fill="none"
-                  stroke="rgba(255,255,255,0.12)"
-                  strokeWidth="0.75"
-                />
-                {/* Active ray connecting center to selected node */}
-                <motion.line
-                  x1="50"
-                  y1="50"
-                  x2={activePos.x}
-                  y2={activePos.y}
-                  stroke="#E11D2A"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  initial={false}
-                  animate={{ x2: activePos.x, y2: activePos.y }}
-                  transition={{ type: "spring", stiffness: 300, damping: 28 }}
-                />
-              </svg>
+        {/* Editorial Certification Index */}
+        <div className="border-t border-white/10">
+          {CERTIFICATIONS.map((item, idx) => {
+            const isExpanded = expandedId === item.id;
 
-              {/* Center glass disc */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-16 w-16 md:h-18 md:w-18 items-center justify-center rounded-full border border-white/15 bg-mars-navy-deep/95 shadow-xl backdrop-blur-md">
-                <MarsSigmaMark size={28} className="text-white" />
-              </div>
+            return (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 14 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.05 * idx,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="border-b border-white/10 transition-colors duration-250 hover:bg-white/[0.025]"
+              >
+                {/* Clickable Editorial Row */}
+                <button
+                  type="button"
+                  onClick={() => toggleRow(item.id)}
+                  className="group w-full py-7 sm:py-8 lg:py-9 px-1 text-left focus:outline-none flex items-center min-h-[105px] md:min-h-[115px]"
+                  aria-expanded={isExpanded}
+                >
+                  {/* Desktop 4-Column Editorial Structure */}
+                  <div className="hidden md:flex items-center w-full">
+                    {/* Col 1: Index Number (~8%) */}
+                    <div className="w-[8%] shrink-0 font-mono text-xs sm:text-sm text-[#8D98A8] tracking-wider transition-colors duration-250 group-hover:text-white">
+                      {item.index}
+                    </div>
 
-              {/* Minimal modern circular nodes */}
-              {positions.map((p, i) => {
-                const node = NODES[i];
-                const isActive = activeId === node.id;
-                return (
-                  <button
-                    key={node.id}
-                    type="button"
-                    onClick={() => setActiveId(node.id)}
-                    onMouseEnter={() => setActiveId(node.id)}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none"
-                    style={{ left: `${p.x}%`, top: `${p.y}%` }}
-                    aria-label={node.code}
-                  >
-                    <div
-                      className={`flex h-12 w-12 sm:h-13 sm:w-13 md:h-14 md:w-14 items-center justify-center rounded-full border text-center transition-all duration-300 ${
-                        isActive
-                          ? "border-mars-red bg-mars-red text-white scale-110 shadow-[0_0_24px_rgba(225,29,42,0.45)]"
-                          : "border-white/15 bg-mars-navy-deep/90 text-white/70 hover:border-white/40 hover:text-white hover:scale-105 backdrop-blur-sm"
-                      }`}
-                    >
-                      <span className="px-1 text-[0.62rem] sm:text-[0.68rem] md:text-[0.72rem] font-semibold tracking-tight leading-tight">
-                        {node.code}
+                    {/* Col 2: Certification / Standard Name (~18%) */}
+                    <div className="w-[20%] shrink-0 pr-4">
+                      <span className="font-display text-xl lg:text-2xl font-600 text-[#F5F7FA] tracking-tight transition-colors duration-250 group-hover:text-white">
+                        {item.code}
                       </span>
                     </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
 
-          {/* Right: Modern Editorial Details */}
-          <div className="lg:col-span-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeNode.id}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="max-w-xl"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="h-px w-6 bg-mars-red" />
-                  <span className="font-mono-tech text-xs uppercase tracking-[0.25em] text-mars-cyan">
-                    Standard {activeNode.index}
-                  </span>
-                </div>
+                    {/* Col 3: Description (~42%) */}
+                    <div className="w-[42%] shrink-0 pr-6 text-sm lg:text-base text-[#8D98A8] font-normal leading-snug transition-colors duration-250 group-hover:text-[#F5F7FA]/90">
+                      {item.description}
+                    </div>
 
-                <h3 className="mt-3 font-display text-3xl sm:text-4xl font-600 uppercase tracking-tight text-white leading-tight">
-                  {activeNode.name}
-                </h3>
+                    {/* Col 4: Industry / Category + Micro Arrow (~30%) */}
+                    <div className="w-[30%] shrink-0 flex items-center justify-between pl-2">
+                      <span className="font-mono text-xs uppercase tracking-[0.16em] text-[#8D98A8] transition-colors duration-250 group-hover:text-[#F5F7FA]">
+                        {item.category}
+                      </span>
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-250">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          className="text-[#8D98A8] opacity-60 transition-all duration-250 group-hover:opacity-100 group-hover:translate-x-1.5 group-hover:text-white"
+                        >
+                          <path
+                            d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
 
-                <p className="mt-4 text-base leading-relaxed text-white/70">
-                  {activeNode.desc}
-                </p>
+                  {/* Mobile Stacked Editorial Item (<768px) */}
+                  <div className="md:hidden flex flex-col gap-2 w-full">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs text-[#8D98A8]">
+                        {item.index}
+                      </span>
+                      <span className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8D98A8]">
+                        {item.category}
+                      </span>
+                    </div>
+                    <div className="font-display text-2xl font-600 text-[#F5F7FA] tracking-tight transition-colors duration-250 group-hover:text-white">
+                      {item.code}
+                    </div>
+                    <div className="flex items-baseline justify-between gap-4 pt-0.5">
+                      <span className="text-sm text-[#8D98A8] leading-snug">
+                        {item.description}
+                      </span>
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        className="shrink-0 text-[#8D98A8] opacity-70 transition-transform duration-250 group-hover:translate-x-1.5 group-hover:text-white"
+                      >
+                        <path
+                          d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Smooth Expandable Detail Panel */}
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      key="details"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="border-t border-white/[0.06] bg-white/[0.02] px-4 sm:px-8 py-6 md:py-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+                          <div className="lg:col-span-8">
+                            <span className="font-mono text-[0.65rem] text-[#3FD0FF]/90 uppercase tracking-[0.22em] block mb-2 font-medium">
+                              Scope & Architectural Mandate
+                            </span>
+                            <p className="text-sm sm:text-base leading-relaxed text-[#F5F7FA]/85 font-sans">
+                              {item.details}
+                            </p>
+                          </div>
+                          <div className="lg:col-span-4 flex flex-col justify-between gap-4 border-l-0 lg:border-l border-white/[0.08] pl-0 lg:pl-8">
+                            <div>
+                              <span className="block font-mono text-[0.65rem] uppercase tracking-[0.2em] text-[#8D98A8] mb-2 font-medium">
+                                Target Industries
+                              </span>
+                              <p className="text-xs sm:text-sm text-[#F5F7FA] font-medium leading-relaxed">
+                                {item.industries}
+                              </p>
+                            </div>
+                            <a
+                              href="#cta"
+                              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[#F5F7FA] hover:text-white transition-colors duration-200 group/cta pt-1"
+                            >
+                              <span>Explore Standard</span>
+                              <span className="transition-transform duration-200 group-hover/cta:translate-x-1.5">
+                                →
+                              </span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
-            </AnimatePresence>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

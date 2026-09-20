@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { IMAGES } from "./images";
+import { SectionWave } from "./SectionWave";
 
 const FEATURED = {
   category: "Featured Whitepaper",
@@ -57,6 +58,9 @@ export function KnowledgeCenter() {
       ref={ref}
       className="relative overflow-hidden bg-mars-soft-grey py-20 md:py-28 text-mars-navy"
     >
+      {/* Top transition wave from TrustedLeaders */}
+      <SectionWave color="text-mars-navy-night" />
+
       <div className="container-mars relative">
         {/* Consistent Section Header matching SuccessStories */}
         <div className="flex flex-col gap-4 border-b border-mars-navy/10 pb-8 md:flex-row md:items-end md:justify-between md:pb-12">

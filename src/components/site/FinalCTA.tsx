@@ -5,6 +5,7 @@ import { motion, useTransform, useInView, type MotionValue } from "framer-motion
 import { MagneticButton, Crosshair } from "./primitives";
 import { useScrollProgress } from "./primitives/useScrollProgress";
 import { IMAGES } from "./images";
+import { SectionWave } from "./SectionWave";
 
 export function FinalCTA() {
   const [ref, scrollYProgress] = useScrollProgress<HTMLElement>("reveal");
@@ -16,6 +17,9 @@ export function FinalCTA() {
 
   return (
     <section id="cta" ref={ref} className="relative flex min-h-[92svh] items-center justify-center overflow-hidden bg-mars-navy-night">
+      {/* Top transition wave from KnowledgeCenter */}
+      <SectionWave color="text-mars-soft-grey" className="z-30" />
+
       {/* Background image */}
       <motion.div style={{ y: yBg, scale: scaleBg }} className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${IMAGES.sunrise})` }} />

@@ -1,6 +1,7 @@
 'use client'
 
 import { Marquee } from "./primitives";
+import { SectionWave } from "./SectionWave";
 
 const LOGOS = [
   {
@@ -88,16 +89,19 @@ export function TrustedLeaders() {
   const displayLogos = [...LOGOS, ...LOGOS];
 
   return (
-    <section className="relative z-20 border-y border-white/10 bg-mars-navy-night py-10 sm:py-12 md:py-16 text-white overflow-hidden">
+    <section className="relative z-20 bg-mars-navy-night py-12 sm:py-14 md:py-18 text-white overflow-hidden">
+      {/* Top transition wave from SuccessStories */}
+      <SectionWave color="text-mars-soft-grey" />
+
       {/* Subtle blueprint grid atmosphere */}
       <div className="pointer-events-none absolute inset-0 bg-blueprint-grid opacity-15" aria-hidden />
 
-      {/* Edge gradient masks for seamless visual fade */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-16 sm:w-28 md:w-44 bg-gradient-to-r from-mars-navy-night to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-16 sm:w-28 md:w-44 bg-gradient-to-l from-mars-navy-night to-transparent" />
-
       {/* Continuous Infinite Running Loop Marquee across all screen sizes */}
       <div className="relative z-10 w-full overflow-hidden">
+        {/* Edge gradient masks strictly confined to the marquee track */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-16 sm:w-28 md:w-44 bg-gradient-to-r from-mars-navy-night to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-16 sm:w-28 md:w-44 bg-gradient-to-l from-mars-navy-night to-transparent" />
+
         <Marquee speed={36} className="py-2">
           <div className="flex items-center gap-14 sm:gap-20 md:gap-24 lg:gap-28 pr-14 sm:pr-20 md:pr-24 lg:pr-28">
             {displayLogos.map((item, idx) => (

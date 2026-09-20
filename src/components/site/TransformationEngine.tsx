@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, useTransform, type MotionValue } from "framer-motion";
 import { useScrollProgress } from "./primitives/useScrollProgress";
+import { SectionWave } from "./SectionWave";
 
 const STEPS = [
   {
@@ -91,6 +92,9 @@ export function TransformationEngine() {
   return (
     <section id="engine" ref={ref} className="relative h-[450vh] bg-mars-navy-night">
       <div className="sticky top-0 flex h-[100svh] w-full flex-col justify-between overflow-hidden bg-mars-navy-night px-6 py-8 md:px-12 md:py-12 lg:px-20 lg:py-14">
+        {/* Top transition wave from FounderImpact (white) */}
+        <SectionWave color="text-white" />
+
         {/* Subtle background atmosphere: minimal grid and deep radial spotlight */}
         <div className="pointer-events-none absolute inset-0 bg-blueprint-grid opacity-20" aria-hidden />
         <div className="pointer-events-none absolute inset-0 bg-spotlight opacity-70" aria-hidden />

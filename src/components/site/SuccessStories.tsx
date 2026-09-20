@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { IMAGES } from "./images";
+import { SectionWave } from "./SectionWave";
 
 const CASE = {
   category: "Documented Case // Aerospace Tier-2",
@@ -26,6 +27,9 @@ export function SuccessStories() {
 
   return (
     <section id="stories" ref={ref} className="relative overflow-hidden bg-mars-soft-grey py-24 md:py-32">
+      {/* Top transition wave from TransformationEngine */}
+      <SectionWave color="text-mars-navy-night" />
+
       <div className="container-mars relative">
         {/* Minimalist Section Header */}
         <div className="flex flex-col gap-4 border-b border-mars-navy/10 pb-8 md:flex-row md:items-end md:justify-between md:pb-12">

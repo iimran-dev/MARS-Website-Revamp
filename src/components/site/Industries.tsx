@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { SectionLabel, Reveal, RevealText, Crosshair } from "./primitives";
 import { IMAGES } from "./images";
+import { SectionWave } from "./SectionWave";
 
 const INDUSTRIES = [
   {
@@ -57,6 +58,9 @@ export function Industries() {
 
   return (
     <section id="industries" className="relative overflow-hidden bg-mars-soft-grey py-24 md:py-36">
+      {/* Top transition wave from AuthorityRibbon */}
+      <SectionWave color="text-mars-navy-night" />
+
       {/* Header */}
       <div className="container-mars">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
